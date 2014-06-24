@@ -1,0 +1,719 @@
+{
+  "data": [
+    {
+      "counts": {
+        "count": 23, 
+        "logCount": 3.1354942159291497
+      }, 
+      "money": {
+        "logMeanIncome": 11.943523951013029, 
+        "meanIncome": 153817.78260869565
+      }, 
+      "state": "AB"
+    }, 
+    {
+      "counts": {
+        "count": 43, 
+        "logCount": 3.7612001156935624
+      }, 
+      "money": {
+        "logMeanIncome": 13.083520173785356, 
+        "meanIncome": 480950.76000000001
+      }, 
+      "state": "AK"
+    }, 
+    {
+      "counts": {
+        "count": 2212, 
+        "logCount": 7.701652362642226
+      }, 
+      "money": {
+        "logMeanIncome": 12.65197776752097, 
+        "meanIncome": 312380.65384615387
+      }, 
+      "state": "AL"
+    }, 
+    {
+      "counts": {
+        "count": 412, 
+        "logCount": 6.021023349349527
+      }, 
+      "money": {
+        "logMeanIncome": 12.538444207875077, 
+        "meanIncome": 278854.16216216219
+      }, 
+      "state": "AR"
+    }, 
+    {
+      "counts": {
+        "count": 4, 
+        "logCount": 1.3862943611198906
+      }, 
+      "money": {
+        "logMeanIncome": NaN, 
+        "meanIncome": NaN
+      }, 
+      "state": "AS"
+    }, 
+    {
+      "counts": {
+        "count": 1159, 
+        "logCount": 7.055312843339752
+      }, 
+      "money": {
+        "logMeanIncome": 12.511712207368335, 
+        "meanIncome": 271498.58522050059
+      }, 
+      "state": "AZ"
+    }, 
+    {
+      "counts": {
+        "count": 53, 
+        "logCount": 3.970291913552122
+      }, 
+      "money": {
+        "logMeanIncome": 11.94885486516556, 
+        "meanIncome": 154639.96153846153
+      }, 
+      "state": "BC"
+    }, 
+    {
+      "counts": {
+        "count": 23547, 
+        "logCount": 10.066753702794923
+      }, 
+      "money": {
+        "logMeanIncome": 12.70684054004248, 
+        "meanIncome": 329997.56018695887
+      }, 
+      "state": "CA"
+    }, 
+    {
+      "counts": {
+        "count": 3179, 
+        "logCount": 8.064321960910803
+      }, 
+      "money": {
+        "logMeanIncome": 12.495429713586805, 
+        "meanIncome": 267113.70645161293
+      }, 
+      "state": "CO"
+    }, 
+    {
+      "counts": {
+        "count": 4025, 
+        "logCount": 8.300280189852664
+      }, 
+      "money": {
+        "logMeanIncome": 12.661900536889716, 
+        "meanIncome": 315495.76473317866
+      }, 
+      "state": "CT"
+    }, 
+    {
+      "counts": {
+        "count": 1545, 
+        "logCount": 7.3427791893318455
+      }, 
+      "money": {
+        "logMeanIncome": 12.710539914760695, 
+        "meanIncome": 331220.6056751468
+      }, 
+      "state": "DC"
+    }, 
+    {
+      "counts": {
+        "count": 127, 
+        "logCount": 4.844187086458591
+      }, 
+      "money": {
+        "logMeanIncome": 12.515003901082054, 
+        "meanIncome": 272393.74789915967
+      }, 
+      "state": "DE"
+    }, 
+    {
+      "counts": {
+        "count": 2630, 
+        "logCount": 7.874739125171811
+      }, 
+      "money": {
+        "logMeanIncome": 12.52196162095412, 
+        "meanIncome": 274295.59588235297
+      }, 
+      "state": "FL"
+    }, 
+    {
+      "counts": {
+        "count": 2727, 
+        "logCount": 7.910957382845589
+      }, 
+      "money": {
+        "logMeanIncome": 12.541201962971776, 
+        "meanIncome": 279624.23499719572
+      }, 
+      "state": "GA"
+    }, 
+    {
+      "counts": {
+        "count": 21, 
+        "logCount": 3.044522437723423
+      }, 
+      "money": {
+        "logMeanIncome": 12.658463323388679, 
+        "meanIncome": 314413.20000000001
+      }, 
+      "state": "GU"
+    }, 
+    {
+      "counts": {
+        "count": 313, 
+        "logCount": 5.746203190540153
+      }, 
+      "money": {
+        "logMeanIncome": 13.089393844341593, 
+        "meanIncome": 483784.01898734178
+      }, 
+      "state": "HI"
+    }, 
+    {
+      "counts": {
+        "count": 1622, 
+        "logCount": 7.3914152346753585
+      }, 
+      "money": {
+        "logMeanIncome": 12.616088570488376, 
+        "meanIncome": 301368.35626283369
+      }, 
+      "state": "IA"
+    }, 
+    {
+      "counts": {
+        "count": 46, 
+        "logCount": 3.828641396489095
+      }, 
+      "money": {
+        "logMeanIncome": 12.67690174043698, 
+        "meanIncome": 320264.25806451612
+      }, 
+      "state": "ID"
+    }, 
+    {
+      "counts": {
+        "count": 4887, 
+        "logCount": 8.494333897270154
+      }, 
+      "money": {
+        "logMeanIncome": 12.52242744526893, 
+        "meanIncome": 274423.39920499717
+      }, 
+      "state": "IL"
+    }, 
+    {
+      "counts": {
+        "count": 2221, 
+        "logCount": 7.7057128238944275
+      }, 
+      "money": {
+        "logMeanIncome": 12.506726212971795, 
+        "meanIncome": 270148.26394052047
+      }, 
+      "state": "IN"
+    }, 
+    {
+      "counts": {
+        "count": 570, 
+        "logCount": 6.345636360828596
+      }, 
+      "money": {
+        "logMeanIncome": 12.450515106971649, 
+        "meanIncome": 255381.83771929826
+      }, 
+      "state": "KS"
+    }, 
+    {
+      "counts": {
+        "count": 1004, 
+        "logCount": 6.911747300251674
+      }, 
+      "money": {
+        "logMeanIncome": 12.349852914940639, 
+        "meanIncome": 230926.07460732985
+      }, 
+      "state": "KY"
+    }, 
+    {
+      "counts": {
+        "count": 1237, 
+        "logCount": 7.1204443723924875
+      }, 
+      "money": {
+        "logMeanIncome": 12.399870330163148, 
+        "meanIncome": 242770.1354933726
+      }, 
+      "state": "LA"
+    }, 
+    {
+      "counts": {
+        "count": 14492, 
+        "logCount": 9.581352052014967
+      }, 
+      "money": {
+        "logMeanIncome": 12.724730532581184, 
+        "meanIncome": 335954.33856455324
+      }, 
+      "state": "MA"
+    }, 
+    {
+      "counts": {
+        "count": 12, 
+        "logCount": 2.4849066497880004
+      }, 
+      "money": {
+        "logMeanIncome": 11.962852866994739, 
+        "meanIncome": 156819.83333333334
+      }, 
+      "state": "MB"
+    }, 
+    {
+      "counts": {
+        "count": 6621, 
+        "logCount": 8.798001694924846
+      }, 
+      "money": {
+        "logMeanIncome": 12.781291230228664, 
+        "meanIncome": 355503.80458250717
+      }, 
+      "state": "MD"
+    }, 
+    {
+      "counts": {
+        "count": 324, 
+        "logCount": 5.780743515792329
+      }, 
+      "money": {
+        "logMeanIncome": 12.979879987330731, 
+        "meanIncome": 433600.97916666669
+      }, 
+      "state": "ME"
+    }, 
+    {
+      "counts": {
+        "count": 4, 
+        "logCount": 1.3862943611198906
+      }, 
+      "money": {
+        "logMeanIncome": NaN, 
+        "meanIncome": NaN
+      }, 
+      "state": "MH"
+    }, 
+    {
+      "counts": {
+        "count": 4069, 
+        "logCount": 8.31115254800169
+      }, 
+      "money": {
+        "logMeanIncome": 12.603588235621386, 
+        "meanIncome": 297624.59875183553
+      }, 
+      "state": "MI"
+    }, 
+    {
+      "counts": {
+        "count": 2996, 
+        "logCount": 8.005033344637111
+      }, 
+      "money": {
+        "logMeanIncome": 12.632417863033437, 
+        "meanIncome": 306329.88721413724
+      }, 
+      "state": "MN"
+    }, 
+    {
+      "counts": {
+        "count": 3594, 
+        "logCount": 8.187021067343505
+      }, 
+      "money": {
+        "logMeanIncome": 12.69216345922166, 
+        "meanIncome": 325189.52956298203
+      }, 
+      "state": "MO"
+    }, 
+    {
+      "counts": {
+        "count": 4, 
+        "logCount": 1.3862943611198906
+      }, 
+      "money": {
+        "logMeanIncome": NaN, 
+        "meanIncome": NaN
+      }, 
+      "state": "MP"
+    }, 
+    {
+      "counts": {
+        "count": 239, 
+        "logCount": 5.476463551931511
+      }, 
+      "money": {
+        "logMeanIncome": 12.452717980271537, 
+        "meanIncome": 255945.03164556963
+      }, 
+      "state": "MS"
+    }, 
+    {
+      "counts": {
+        "count": 181, 
+        "logCount": 5.198497031265826
+      }, 
+      "money": {
+        "logMeanIncome": 12.443559713983797, 
+        "meanIncome": 253611.71974522292
+      }, 
+      "state": "MT"
+    }, 
+    {
+      "counts": {
+        "count": 7261, 
+        "logCount": 8.890272839380247
+      }, 
+      "money": {
+        "logMeanIncome": 12.724533820559033, 
+        "meanIncome": 335888.25880681816
+      }, 
+      "state": "NC"
+    }, 
+    {
+      "counts": {
+        "count": 72, 
+        "logCount": 4.276666119016055
+      }, 
+      "money": {
+        "logMeanIncome": 12.461908724611783, 
+        "meanIncome": 258308.20000000001
+      }, 
+      "state": "ND"
+    }, 
+    {
+      "counts": {
+        "count": 458, 
+        "logCount": 6.126869184114185
+      }, 
+      "money": {
+        "logMeanIncome": 12.513097962096175, 
+        "meanIncome": 271875.07647058822
+      }, 
+      "state": "NE"
+    }, 
+    {
+      "counts": {
+        "count": 595, 
+        "logCount": 6.38856140554563
+      }, 
+      "money": {
+        "logMeanIncome": 12.64668740798404, 
+        "meanIncome": 310732.41161616164
+      }, 
+      "state": "NH"
+    }, 
+    {
+      "counts": {
+        "count": 1574, 
+        "logCount": 7.3613754289773485
+      }, 
+      "money": {
+        "logMeanIncome": 12.56652276931651, 
+        "meanIncome": 286794.94708994706
+      }, 
+      "state": "NJ"
+    }, 
+    {
+      "counts": {
+        "count": 1074, 
+        "logCount": 6.97914527506881
+      }, 
+      "money": {
+        "logMeanIncome": 12.71356759238114, 
+        "meanIncome": 332224.95454545453
+      }, 
+      "state": "NM"
+    }, 
+    {
+      "counts": {
+        "count": 3, 
+        "logCount": 1.0986122886681098
+      }, 
+      "money": {
+        "logMeanIncome": 11.392582906528252, 
+        "meanIncome": 88661.666666666672
+      }, 
+      "state": "NS"
+    }, 
+    {
+      "counts": {
+        "count": 161, 
+        "logCount": 5.081404364984463
+      }, 
+      "money": {
+        "logMeanIncome": 12.532777420169907, 
+        "meanIncome": 277278.42372881353
+      }, 
+      "state": "NV"
+    }, 
+    {
+      "counts": {
+        "count": 15640, 
+        "logCount": 9.657587014099303
+      }, 
+      "money": {
+        "logMeanIncome": 12.666953263314118, 
+        "meanIncome": 317093.91262240394
+      }, 
+      "state": "NY"
+    }, 
+    {
+      "counts": {
+        "count": 4762, 
+        "logCount": 8.468423027046809
+      }, 
+      "money": {
+        "logMeanIncome": 12.529718093235449, 
+        "meanIncome": 276431.43464762496
+      }, 
+      "state": "OH"
+    }, 
+    {
+      "counts": {
+        "count": 441, 
+        "logCount": 6.089044875446846
+      }, 
+      "money": {
+        "logMeanIncome": 12.548247872773953, 
+        "meanIncome": 281601.39941690961
+      }, 
+      "state": "OK"
+    }, 
+    {
+      "counts": {
+        "count": 142, 
+        "logCount": 4.955827057601261
+      }, 
+      "money": {
+        "logMeanIncome": 12.156560265497433, 
+        "meanIncome": 190338.67521367522
+      }, 
+      "state": "ON"
+    }, 
+    {
+      "counts": {
+        "count": 2103, 
+        "logCount": 7.6511201757027
+      }, 
+      "money": {
+        "logMeanIncome": 12.566917671742656, 
+        "meanIncome": 286908.2254758419
+      }, 
+      "state": "OR"
+    }, 
+    {
+      "counts": {
+        "count": 11082, 
+        "logCount": 9.313077449427295
+      }, 
+      "money": {
+        "logMeanIncome": 12.6465504786961, 
+        "meanIncome": 310689.86616122542
+      }, 
+      "state": "PA"
+    }, 
+    {
+      "counts": {
+        "count": 62, 
+        "logCount": 4.127134385045092
+      }, 
+      "money": {
+        "logMeanIncome": 11.761526478923342, 
+        "meanIncome": 128223.03389830509
+      }, 
+      "state": "PQ"
+    }, 
+    {
+      "counts": {
+        "count": 526, 
+        "logCount": 6.26530121273771
+      }, 
+      "money": {
+        "logMeanIncome": 13.27842799125465, 
+        "meanIncome": 584450.86394557822
+      }, 
+      "state": "PR"
+    }, 
+    {
+      "counts": {
+        "count": 4, 
+        "logCount": 1.3862943611198906
+      }, 
+      "money": {
+        "logMeanIncome": NaN, 
+        "meanIncome": NaN
+      }, 
+      "state": "PW"
+    }, 
+    {
+      "counts": {
+        "count": 9, 
+        "logCount": 2.1972245773362196
+      }, 
+      "money": {
+        "logMeanIncome": 12.17750340351237, 
+        "meanIncome": 194367.0
+      }, 
+      "state": "QC"
+    }, 
+    {
+      "counts": {
+        "count": 804, 
+        "logCount": 6.6895992691789665
+      }, 
+      "money": {
+        "logMeanIncome": 12.402238311227192, 
+        "meanIncome": 243345.69176136365
+      }, 
+      "state": "RI"
+    }, 
+    {
+      "counts": {
+        "count": 1011, 
+        "logCount": 6.918695219020472
+      }, 
+      "money": {
+        "logMeanIncome": 12.426050202458853, 
+        "meanIncome": 249209.7530224525
+      }, 
+      "state": "SC"
+    }, 
+    {
+      "counts": {
+        "count": 63, 
+        "logCount": 4.143134726391533
+      }, 
+      "money": {
+        "logMeanIncome": 12.785790005234306, 
+        "meanIncome": 357106.73913043475
+      }, 
+      "state": "SD"
+    }, 
+    {
+      "counts": {
+        "count": 3106, 
+        "logCount": 8.041091003708633
+      }, 
+      "money": {
+        "logMeanIncome": 12.585597727056804, 
+        "meanIncome": 292318.0576701269
+      }, 
+      "state": "TN"
+    }, 
+    {
+      "counts": {
+        "count": 8262, 
+        "logCount": 9.01942196795671
+      }, 
+      "money": {
+        "logMeanIncome": 12.661606942807355, 
+        "meanIncome": 315403.15063978283
+      }, 
+      "state": "TX"
+    }, 
+    {
+      "counts": {
+        "count": 1234, 
+        "logCount": 7.1180162044653335
+      }, 
+      "money": {
+        "logMeanIncome": 12.51493100214452, 
+        "meanIncome": 272373.89140811458
+      }, 
+      "state": "UT"
+    }, 
+    {
+      "counts": {
+        "count": 2674, 
+        "logCount": 7.891330757661889
+      }, 
+      "money": {
+        "logMeanIncome": 12.52719048449857, 
+        "meanIncome": 275733.60642813827
+      }, 
+      "state": "VA"
+    }, 
+    {
+      "counts": {
+        "count": 8, 
+        "logCount": 2.0794415416798357
+      }, 
+      "money": {
+        "logMeanIncome": 12.30850287208134, 
+        "meanIncome": 221572.0
+      }, 
+      "state": "VI"
+    }, 
+    {
+      "counts": {
+        "count": 597, 
+        "logCount": 6.391917113392602
+      }, 
+      "money": {
+        "logMeanIncome": 12.652591026367995, 
+        "meanIncome": 312572.2827988338
+      }, 
+      "state": "VT"
+    }, 
+    {
+      "counts": {
+        "count": 4811, 
+        "logCount": 8.478660241699453
+      }, 
+      "money": {
+        "logMeanIncome": 12.819535308578972, 
+        "meanIncome": 369363.04774897679
+      }, 
+      "state": "WA"
+    }, 
+    {
+      "counts": {
+        "count": 3375, 
+        "logCount": 8.12415060330663
+      }, 
+      "money": {
+        "logMeanIncome": 12.581295411298372, 
+        "meanIncome": 291063.11460055097
+      }, 
+      "state": "WI"
+    }, 
+    {
+      "counts": {
+        "count": 129, 
+        "logCount": 4.859812404361672
+      }, 
+      "money": {
+        "logMeanIncome": 12.4107397130311, 
+        "meanIncome": 245423.29000000001
+      }, 
+      "state": "WV"
+    }, 
+    {
+      "counts": {
+        "count": 55, 
+        "logCount": 4.007333185232471
+      }, 
+      "money": {
+        "logMeanIncome": 12.795689986662724, 
+        "meanIncome": 360659.64705882355
+      }, 
+      "state": "WY"
+    }
+  ]
+}
