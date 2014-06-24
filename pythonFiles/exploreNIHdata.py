@@ -171,29 +171,29 @@ print 'Vision: ' + str(keywords['vision']) + '\n'
 # output as json for d3
 #---------------------------------------------------------------------------------------
 
-dJson = []
+allData = []
 states = sorted(list(data.ORG_STATE.value_counts().index))
 values = data.ORG_STATE.value_counts()
 meanIncome = data['TOTAL_COST'].groupby(data.ORG_STATE).mean()
 
 for state in states:
-	dict1 = {}
-	dict1['state'] = state
-	dict2 = {}
-	dict2['count'] = values[state]
-	dict2['logCount'] = math.log(values[state])
-	dict1['counts'] = dict2
-	dict3 = {}
-	dict3['meanIncome'] = meanIncome[state]
-	dict3['logMeanIncome'] = math.log(meanIncome[state])
-	dict1['money'] = dict3
-	dJson.append(dict1)
+	stateData = {}
+	stateData['state'] = state
+	countData = {}
+	countData['count'] = values[state]
+	countData['logCount'] = math.log(values[state])
+	stateData['counts'] = countData
+	moneyData = {}
+	moneyData['meanIncome'] = meanIncome[state]
+	moneyData['logMeanIncome'] = math.log(meanIncome[state])
+	stateData['money'] = dict3
+	allData.append(dict1)
 
-dJson2 = {}
-dJson2['data'] = dJson
+tmp = {}
+tmp['data'] = allData
 
 with open("nih_states.json", "w") as outfile:
-    json.dump(dJson2, outfile, sort_keys=True, indent=2)
+    json.dump(tmp, outfile, sort_keys=True, indent=2)
 
 """
 
