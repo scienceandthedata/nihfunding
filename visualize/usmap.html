@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<p> Mouse over any state to see it's name, click to zoom. </p>
+<script>
+
+// Define variable svg
+var width = 520,
+    height = 350,
+    active = d3.select(null);
+
+// Define the projection
+var projection = d3.geo.albersUsa().translate([width/2, height/2]).scale([700]);
+
+//Define default path generator
+var path = d3.geo.path().projection(projection);
+
+// Crease svg
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// Create background - on 'click' -> reset
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill","white")
+    .on("click", reset);
+
+// define g for reference
+var g = svg.append("g")
+    .style("stroke-width", "1.5px");
+
+// load topojson and wrap function dependent on data in callback
+d3.json("us-states-wIDs-topo.json", function(error, us) {
+  if (error) return console.error(error);
+
+  // Conversion to geoJson
+  var states = topojson.feature(us, us.objects.usStates);
+
+  // outline
+  g.append("path")
+      .datum(states)
+      .attr("d", path)
+      .attr("class","us-map");
+
+  // states
+  g.selectAll(".usStates")
+    .data(states.features)
+    .enter().append("path")
+    .attr("class", "state")
+    .attr("id",function(d){
+        return d.properties.abbr;
+    })
+    .attr("d", path)
+    .style({'stroke': 'white', 'stroke-width': 1})
+    .attr("fill", "gray")
+    .on("mouseover", function(d) {
+
+      var xPosition = path.centroid(d)[0];
+      var yPosition = path.centroid(d)[1];
+
+      d3.select(this)
+        .attr("fill", "orange");
+
+      g.append("text")
+        .data(states.features)
+        .attr("id","label")
+        .attr("x", xPosition)
+        .attr("y", yPosition)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .text(this.id)
+        .style("pointer-events", "none");
+    })
+
+    .on("mouseout", function(d) {
+      d3.select(this)
+        .transition()
+        .duration(200)
+        .attr("fill","gray");
+      
+      d3.select("#label").remove();
+    })
+
+    .on("click", clicked)
+});
+
+function clicked(d) {
+  if (active.node() === this) return reset();
+  active.classed("active", false);
+  active = d3.select(this).classed("active", true);
+
+  var bounds = path.bounds(d),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = .3 / Math.max(dx / width, dy / height),
+      translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+  g.transition()
+      .duration(750)
+      .style("stroke-width", 1.5 / scale + "px")
+      .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+}
+
+function reset() {
+  active.classed("active", false);
+  active = d3.select(null);
+
+  g.transition()
+      .duration(750)
+      .style("stroke-width", "1.5px")
+      .attr("transform", "");
+}
+
+</script>
