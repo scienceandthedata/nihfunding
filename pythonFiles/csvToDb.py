@@ -94,7 +94,7 @@ zips = zips.sort('ORG_NAME')
 zips['_ID'] = range(1,len(zips)+1) # create unique ID for db
 entriesZips = zip(zips._ID, zips.ORG_NAME, zips.ORG_ZIPCODE)
 
-# Connecting to db and inserting values
+# Connecting to db and inserting values (the above still needs to be included)
 #--------------------------------------------
 
 con = None
