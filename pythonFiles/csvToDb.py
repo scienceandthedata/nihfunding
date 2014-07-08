@@ -70,8 +70,38 @@ for officer in officers:
     continue"""
 
 # Special emphasis splits up in different panels
-#http://public.csr.nih.gov/StudySections/SpecialEmphasis/Pages/default.aspx
+# http://public.csr.nih.gov/StudySections/SpecialEmphasis/Pages/default.aspx
 
+#--------------------------------------------
+# Function definitions
+#--------------------------------------------  
+
+def insertIntoDB(dbName, tableName, queries, entries):
+  con = None
+  try:
+
+    print "Connect to database " + dbName + "..."
+    con = lite.connect(dbName)
+    cur = con.cursor()
+
+    print "Construct table " + tableName + "..."
+    queries(cur, tableName, entries)
+    con.commit()
+    print "Success ... \n\n"
+  
+  except lite.Error, e:
+    if con:
+      con.rollback()
+    print "Error %s:" % e.args[0]
+    sys.exit(1)
+  
+  finally:
+    if con:
+      con.close()
+
+#--------------------------------------------
+# Run when called from command line
+#--------------------------------------------  
 
 if __name__ == "__main__":
 
@@ -79,18 +109,18 @@ if __name__ == "__main__":
   # Parse input
   #--------------------------------------------  
   
-  # parser = argparse.ArgumentParser(description = 'Create the NIH DB from CSV files.')
-  # parser.add_argument()
+  parser = argparse.ArgumentParser(description = 'Create the NIH DB from CSV files.')
+  parser.add_argument("dbName", help = "Enter the name of the data base.", type = str)
+  args = parser.parse_args()
+  dbName = args.dbName
 
   #--------------------------------------------
   # Load data
   #--------------------------------------------  
 
-  # determine current working directory
-  
   os.chdir('../dataFiles')
   data = pd.read_csv('RePORTER_PRJ_C_FY2011.csv')
-  os.chdir('../dataFiles/db') # change to current working directory
+  os.chdir('../dataFiles/db') # db location
 
   #--------------------------------------------
   # Create table entries for PI id and PI name
@@ -100,108 +130,73 @@ if __name__ == "__main__":
     x = x.split(';')[0]
     x = x.split('(')[0]
     return x
-  pis = data[['PI_IDS','PI_NAMEs']].drop_duplicates(['PI_IDS'])
-  pis = pis.applymap(rmSemiPar)
-  entriesPIs = zip(pis.PI_IDS,pis.PI_NAMEs)
+  d = data[['PI_IDS','PI_NAMEs']].drop_duplicates(['PI_IDS'])
+  d = d.applymap(rmSemiPar)
+  entries = zip(d.PI_IDS,d.PI_NAMEs)
 
-  con = None
-  try:
-    con = lite.connect('nih.db')
-    cur = con.cursor()
-    print "Construct PI NAMES table ... \n"
-    cur.execute("DROP TABLE IF EXISTS pi_names")
-    cur.execute("CREATE TABLE pi_names(id TEXT, name TEXT)")
-    cur.executemany("INSERT INTO pi_names VALUES(?, ?)", entriesPIs)
-    con.commit()
-    print "Success ... \n\n"
-  except lite.Error, e:
-    if con:
-      con.rollback()
-    print "Error %s:" % e.args[0]
-    sys.exit(1)
-  finally:
-    if con:
-      con.close()
+  def queries(cur, tableName, entries):
+    query = "DROP TABLE IF EXISTS " + tableName
+    cur.execute(query)
+    query = "CREATE TABLE " + tableName + "(id TEXT, name TEXT)"
+    cur.execute(query)
+    query = "INSERT INTO " + tableName + " VALUES(?, ?)"
+    cur.executemany(query, entries)
+
+  insertIntoDB(dbName, 'piNames', queries, entries)
 
   #--------------------------------------------
   # Create table entries for Studysection ID and studysection Name
   #--------------------------------------------
 
-  ss = data[['STUDY_SECTION','STUDY_SECTION_NAME']].drop_duplicates(['STUDY_SECTION'])
-  entriesSS = zip(ss.STUDY_SECTION,ss.STUDY_SECTION_NAME)
+  d = data[['STUDY_SECTION','STUDY_SECTION_NAME']].drop_duplicates(['STUDY_SECTION'])
+  entries = zip(d.STUDY_SECTION,d.STUDY_SECTION_NAME)
 
-  con = None
-  try:
-    con = lite.connect('nih.db')
-    cur = con.cursor()
-    print "Construct STUDY SECTION NAMES table ... \n"
-    cur.execute("DROP TABLE IF EXISTS studysection_names")
-    cur.execute("CREATE TABLE studysection_names(id TEXT, name TEXT)")
-    cur.executemany("INSERT INTO studysection_names VALUES(?, ?)", entriesSS)
-    con.commit()
-    print "Success ... \n\n"
-  except lite.Error, e:
-    if con:
-      con.rollback()
-    print "Error %s:" % e.args[0]
-    sys.exit(1)
-  finally:
-    if con:
-      con.close()
+  def queries(cur, tableName, entries):
+    query = "DROP TABLE IF EXISTS " + tableName
+    cur.execute(query)
+    query = "CREATE TABLE " + tableName + "(id TEXT, name TEXT)"
+    cur.execute(query)
+    query = "INSERT INTO " + tableName + " VALUES(?, ?)"
+    cur.executemany(query, entries)
+
+  insertIntoDB(dbName, 'studySectionNames', queries, entries)
 
   #--------------------------------------------
   # uni name, city, state, country - join by city as foreign destinations have no zipcode
   #--------------------------------------------
 
-  unis = data[['ORG_NAME', 'ORG_DUNS','ORG_CITY', 'ORG_DISTRICT', 'ORG_STATE', 'ORG_COUNTRY', 'ORG_FIPS']].drop_duplicates(['ORG_NAME', 'ORG_CITY'])
-  unis = unis.sort('ORG_NAME')
-  unis['UNI_ID'] = range(1,len(unis)+1)
-  entriesUnis = zip(unis.UNI_ID, unis.ORG_NAME, unis.ORG_DUNS, unis.ORG_CITY, unis.ORG_DISTRICT, unis.ORG_STATE, unis.ORG_COUNTRY, unis.ORG_FIPS)
+  d = data[['ORG_NAME', 'ORG_DUNS','ORG_CITY', 'ORG_DISTRICT', 'ORG_STATE', 'ORG_COUNTRY', 'ORG_FIPS']].drop_duplicates(['ORG_NAME', 'ORG_CITY'])
+  d = d.sort('ORG_NAME')
+  d['UNI_ID'] = range(1,len(d)+1)
+  entries = zip(d.UNI_ID, d.ORG_NAME, d.ORG_DUNS, d.ORG_CITY, d.ORG_DISTRICT, d.ORG_STATE, d.ORG_COUNTRY, d.ORG_FIPS)
 
-  con = None
-  try:
-    con = lite.connect('nih.db')
-    cur = con.cursor()
-    print "Construct LOCATIONS table ... \n"
-    cur.execute("DROP TABLE IF EXISTS locations")
-    cur.execute("CREATE TABLE locations(uni_id INTEGER, name TEXT, duns TEXT, city TEXT, district TEXT, state TEXT, country TEXT, fips TEXT)")
-    cur.executemany("INSERT INTO locations VALUES(?, ?, ?, ?, ?, ?, ?, ?)", entriesUnis)
-    con.commit()
-    print "Success ... \n\n"
-  except lite.Error, e:
-    if con:
-      con.rollback()
-    print "Error %s:" % e.args[0]
-    sys.exit(1)
-  finally:
-    if con:
-      con.close()
+  def queries(cur, tableName, entries):
+    query = "DROP TABLE IF EXISTS " + tableName
+    cur.execute(query)
+    query = "CREATE TABLE " + tableName + "(uni_id INTEGER, name TEXT, duns TEXT, city TEXT, district TEXT, state TEXT, country TEXT, fips TEXT)"
+    cur.execute(query)
+    query = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+    cur.executemany(query, entries)
+
+  insertIntoDB(dbName, 'uniLocations', queries, entries)
 
   #--------------------------------------------
   # zipcode, university name - lookup for all entries with zipcodes by name
   #--------------------------------------------
 
-  zips = data[['ORG_NAME', 'ORG_ZIPCODE']].drop_duplicates(['ORG_NAME', 'ORG_ZIPCODE'])
-  zips = zips.sort('ORG_NAME')
-  zips['_ID'] = range(1,len(zips)+1) # create unique ID for db
-  entriesZips = zip(zips._ID, zips.ORG_NAME, zips.ORG_ZIPCODE)
+  d = data[['ORG_NAME', 'ORG_ZIPCODE']].drop_duplicates(['ORG_NAME', 'ORG_ZIPCODE'])
+  d = d.sort('ORG_NAME')
+  d['_ID'] = range(1,len(d)+1) # create unique ID for db
+  entries = zip(d._ID, d.ORG_NAME, d.ORG_ZIPCODE)
 
-  con = None
-  try:
-    con = lite.connect('nih.db')
-    cur = con.cursor()
-    print "Construct ZIPs table ... \n"
-    cur.execute("DROP TABLE IF EXISTS zips")
-    cur.execute("CREATE TABLE zips(id INTEGER, zip TEXT, uni_duns TEXT)")
-    cur.executemany("INSERT INTO zips VALUES(?, ?, ?)", entriesZips)
-    con.commit()
-    print "Success ... \n\n"
-  except lite.Error, e:
-    if con:
-      con.rollback()
-    print "Error %s:" % e.args[0]
-    sys.exit(1)
-  finally:
-    if con:
-      con.close()
+  def queries(cur, tableName, entries):
+    query = "DROP TABLE IF EXISTS " + tableName
+    cur.execute(query)
+    query = "CREATE TABLE " + tableName + "(id INTEGER, zip TEXT, uni_duns TEXT)"
+    cur.execute(query)
+    query = "INSERT INTO " + tableName + " VALUES(?, ?, ?)"
+    cur.executemany(query, entries)
+
+  insertIntoDB(dbName, 'zips', queries, entries)
+
 
