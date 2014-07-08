@@ -51,6 +51,8 @@ figures/
 *.log
 *.sql
 *.sqlite
+*.db
+*.Rhistory
  
 # OS generated files #
 ######################
