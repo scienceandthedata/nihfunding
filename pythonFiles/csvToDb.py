@@ -14,6 +14,8 @@ import argparse
 # Trying to understand data to figure out how to construct the db
 #--------------------------------------------
 
+# great argparse tutorial: https://docs.python.org/2/howto/argparse.html
+
 # Look here for questions about columns
 # http://exporter.nih.gov/about.aspx
 
