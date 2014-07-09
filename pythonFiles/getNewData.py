@@ -34,8 +34,11 @@ def extract_zip(input_zip):
 
 # get all data files (xml data as zip files)
 for xmlLink in xmlLinks:
-  page = requests.get(xmlLink)
+  page = requests.get(xmlLinks)
   
+  # make f a file like object and write the data of page 
+  # to run processes in memory, necessary because
+  # zipfile expects a file object
   f = StringIO.StringIO() 
   f.write(page.content)
   
@@ -44,12 +47,34 @@ for xmlLink in xmlLinks:
   print "Extracted file: " + extracted.keys()[0]
   d = extracted.values()[0]
 
-  # extract the data from xml file (there also is a method called iterfind)
-  ids = []
+  # Look at data
+  print d
+
+  # parses xml from string
   root = ET.fromstring(d)
-  for row in root.findall('row'):
-    id = row.find('APPLICATION_ID').text
-    ids.append(id)
+
+# in development -----------------
+
+# extract the data from xml file
+ids = []
+for row in root.findall('row'):
+  ids.append(row.find('APPLICATION_ID').text)
+
+# generator function
+def iterparent(tree):
+  for parent in tree.getiterator():
+      for child in parent:
+          yield parent, child
+
+for parent, child in iterparent(tree):
+    ... work on parent/child tuple
+
+parent_map = dict((c, p) for p in root.getiterator() for c in p)
+
+a = root.findall("row/*")[2].text
+
+# https://docs.python.org/2/library/xml.etree.elementtree.html
+# http://infohost.nmt.edu/tcc/help/pubs/pylxml/web/Element-children.html
 
 # missing now is automatic header detection - that is - child detection ... 
 # I could use regular expressions, but that seems unelegant and laborious. 
