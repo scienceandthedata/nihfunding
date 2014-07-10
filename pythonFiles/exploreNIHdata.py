@@ -30,7 +30,7 @@ def barGraph(xvals,yvals,width,xTick,xLabel,yLabel,bottomAdjust,saveFigure):
 def loadData_fromOriginal(nrFiles,saveFile):
 	
 	# makes list of all files with 'RePORTER' in name
-	files = [f for f in os.listdir(dataPath) if os.path.isfile(f) and 'RePORTER' in f]
+	files = [f for f in os.listdir(dataPath) if os.path.isfile(f) and 'RePORTER' in f and '.csv' in f]
 	
 	# with string input, loads all files, otherwise specified number
 	if isinstance(nrFiles,str):
