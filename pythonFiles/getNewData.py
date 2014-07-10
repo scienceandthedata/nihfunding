@@ -34,11 +34,11 @@ def extract_zip(input_zip):
 
 # get all data files (xml data as zip files)
 for xmlLink in xmlLinks:
-  page = requests.get(xmlLinks)
+  page = requests.get(xmlLinks) # returns zip file
   
   # make f a file like object and write the data of page 
   # to run processes in memory, necessary because
-  # zipfile expects a file object
+  # zipfile expects file object
   f = StringIO.StringIO() 
   f.write(page.content)
   
@@ -47,7 +47,7 @@ for xmlLink in xmlLinks:
   print "Extracted file: " + extracted.keys()[0]
   d = extracted.values()[0]
 
-  # Look at data
+  # Look at data currently string format
   print d
 
   # parses xml from string
@@ -55,10 +55,14 @@ for xmlLink in xmlLinks:
 
 # in development -----------------
 
-# extract the data from xml file
-ids = []
+# extract the data from xml file - adjust to prevent overwriting ...
 for row in root.findall('row'):
-  ids.append(row.find('APPLICATION_ID').text)
+  children = row.getchildren()
+  
+  dataLine = {}
+  for child in children:
+      dataLine[child.tag] = child.text
+
 
 # generator function
 def iterparent(tree):
