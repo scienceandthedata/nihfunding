@@ -186,6 +186,7 @@ if __name__ == "__main__":
   # zipcode, university name - lookup for all entries with zipcodes by name
   #--------------------------------------------
 
+  # change to project ID to zipcode (probably not accessed often)
   d = data[['ORG_NAME', 'ORG_ZIPCODE']].drop_duplicates(['ORG_NAME', 'ORG_ZIPCODE'])
   d = d.sort('ORG_NAME')
   d['_ID'] = range(1,len(d)+1) # create unique ID for db
