@@ -10,7 +10,7 @@ import json
 # User defined functions
 #----------------------------------------------------------------
 
-def barGraph(xvals,yvals,width,xTick,xLabel,yLabel,bottomAdjust,saveFigure):
+def barGraph(xvals,yvals,width,xTick,xLabel,yLabel,bottomAdjust,saveFigure=0):
 	fig, ax = plt.subplots()
 	rects = ax.bar(xvals,yvals,width,color='r')
 	ax.set_ylabel(yLabel)
@@ -217,4 +217,137 @@ http://wrobstory.github.io/2013/04/python-maps-choropleth.html
 http://bl.ocks.org/mbostock/4060606
 """
 
+# look at the distribution of application type for RO1 grants
+# R01 accounts for about 35.7% of the grants 
+# mostly type 5 = Non-competing continuation
+# ---------------------------------------------------------
+appIDs = data.APPLICATION_TYPE[data.ACTIVITY=='R01'].astype(int)
+xvals = range(0,len(unique(appIDs)))
+yvals = appIDs.value_counts()
+xTick = tuple(appIDs.value_counts().index)
+barGraph(xvals,yvals,0.5,xTick,'application type','count',0,'R01_apptype.png')
 
+
+# tally up the sums for individual RO1s with the same core project numbers 
+# ---------------------------------------------------------
+#coreProjNums = unique(data.CORE_PROJECT_NUM[data.ACTIVITY=='R01'])
+# projSums = []
+# for proj in coreProjNums:
+# 	projSums.append(sum(data.TOTAL_COST[data.CORE_PROJECT_NUM==proj]))
+R01data = data.ix[data.ACTIVITY=='R01',:]
+R01dataCost = R01data.groupby('CORE_PROJECT_NUM').TOTAL_COST.sum().divide(1000000).dropna()
+saveFigFlg = False
+
+fig = plt.figure()
+ax = fig.add_subplot(2,1,1) # distribution of cost 
+ax = R01dataCost.hist(bins=100)
+ax.set_ylabel('count')
+ax.set_xlabel('total cost (in millions)')
+ax.set_title('total cost of R01 core projects')
+
+ax = fig.add_subplot(2,1,2) # ranked cost by individual core projects 
+R01dataCost.sort(ascending=False)
+plt.plot(R01dataCost,'.',markersize=10) #semilogy
+plt.xlim(([-500, len(R01dataCost)+500]))
+plt.show()
+ax.set_xlabel('rank')
+ax.set_ylabel('total cost (in millions)')
+
+if saveFigFlg:
+	fig.set_size_inches(18.5,10.5)
+	plt.savefig('R01_coreProjectSumCost',dpi=100)
+
+
+# Cost per by year 
+# ---------------------------------------------------------
+R01dataCostByYear = R01data.groupby('FY').TOTAL_COST
+
+fig = plt.figure()
+ax = fig.add_subplot(2,1,1) # total cost by year 
+R01dataCostByYear.sum().divide(1000000).dropna().plot(kind='bar')
+ax.set_title('Total R01 Cost by FY (in millions)')
+
+ax = fig.add_subplot(2,1,2) # top 10 percent of grants
+R01dataCostByYear.quantile(.90).divide(1000000).dropna().plot(color='g')
+R01dataCostByYear.quantile(.50).divide(1000000).dropna().plot(color='k')
+R01dataCostByYear.quantile(.10).divide(1000000).dropna().plot(color='r')
+plt.ylim((0,0.7))
+plt.legend( ('10th', '50th', '90th'),loc='upper left' )
+ax.set_title('Quantile Cost by FY (in millions)')
+
+if saveFigFlg:
+	fig.set_size_inches(12,8)
+	plt.savefig('R01_costByFY',dpi=100)
+
+
+# Number of grants funded by year 
+# ---------------------------------------------------------
+fig = plt.figure()
+ax = fig.add_subplot(2,2,1)
+# total number of new applications per year 
+R01data.groupby('FY').APPLICATION_ID.count().plot(kind='bar')
+ax.set_title('Total number of grants')
+ax.set_ylabel('count')
+
+ax = fig.add_subplot(2,2,2)
+# number of new applications per year 
+# group grants by core project number and get the first year that it applies 
+# get back a data frame indexed by core project number
+initCoreByYear = R01data.groupby('CORE_PROJECT_NUM').FY.min()
+# reindex so that CORE_PROJECT_NUM and FY are separate columns
+initCoreByYear = initCoreByYear.reset_index()
+initCoreByYear.groupby('FY').CORE_PROJECT_NUM.count().plot(kind='bar')
+plt.ylim((0,6000))
+ax.set_title('Number of new grants')
+ax.set_ylabel('count')
+# Note that 2001 is off the scale and should not be counted because this is the 
+# the first year we have available data, even though some grants may have renewals
+# but they nonetheless appear as new 
+
+ax = fig.add_subplot(2,2,3)
+# look at applications types 1 2 3 (new, competing renewal, and competing revision)
+R01data.groupby('FY').APPLICATION_TYPE.apply(lambda x: sum((x==1)|(x==2)|(x==3))).plot(kind='bar')
+ax.set_title('Number of type 1,2,3 grants (new, competing renewal, or revision)')
+ax.set_ylabel('count')
+
+ax = fig.add_subplot(2,2,4)
+# number of non-competitive renewals (type 5), the most numerous application types 
+R01data.groupby('FY').APPLICATION_TYPE.apply(lambda x: sum(x==5)).plot(kind='bar')
+ax.set_title('Number of type 5 grants (non-competitive renewals)')
+ax.set_ylabel('count')
+
+if saveFigFlg:
+	fig.set_size_inches(18.5,10.5)
+	plt.savefig('R01_numGrantsByFY',dpi=100)
+
+
+# Look at things by funding institute 
+# ---------------------------------------------------------
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+# get rid of null values 
+R01data2 = R01data[R01data.FUNDING_ICs.notnull()]
+# add new column with shorterned institute abbr
+R01data2['IC'] = R01data2.FUNDING_ICs.apply(lambda x: x.split(':')[0])
+# now group by IC
+R01dataICtotal = R01data2.groupby('IC').TOTAL_COST.sum().divide(1e9)
+R01dataICtotal.sort(ascending=False)
+R01dataICtotal.plot(kind='bar')
+ax.set_title('Total Cost by Funding Institute (in billions)')
+ax.set_ylabel('$ (in billions)')
+if saveFigFlg:
+	fig.set_size_inches(12,8)
+	plt.savefig('R01_costByIC',dpi=100)
+
+# Now take the top N funding institutes and look at how their funding changed over time
+costICByFY = pd.DataFrame()
+topN = 10
+for inst in R01dataICtotal.index[0:topN]:
+	costICByFY[inst] = R01data2[R01data2.IC == inst].groupby('FY').TOTAL_COST.sum().divide(1e6)
+ttl = 'Total Cost for Top %d Funding Institute' % topN
+ax = costICByFY.plot(colormap='jet',title=ttl)
+ax.set_ylabel('$ (in millions)')
+
+if saveFigFlg:
+	fig.set_size_inches(12,8)
+	plt.savefig('R01_costByICandFY',dpi=100)
