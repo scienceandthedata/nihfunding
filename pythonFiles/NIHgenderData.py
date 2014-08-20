@@ -13,6 +13,12 @@ from pandas import DataFrame,Series
 import numpy as np
 import os
 # --------------------------------------------------------------------------------
+# This is the first file of 3-part series of script that slices the NIH data
+# This file can do the following: 
+#   -create a consolidated name file for a given number of years.
+#   - create a consolidated NIH or R01 data file for a given number of years
+#   - alternatively append gender indexes to the above and write it out
+# --------------------------------------------------------------------------------
 def extractNamesDict(numYears,saveFile):
     # make a consolidated name file of a given number of years based on census data
     # first name, gender, num repeats
@@ -158,6 +164,7 @@ os.chdir(dataPath)
 years=range(2000,2015)
 numGrantsGender=np.zeros([1,4])
 costGrantsGender=np.zeros([4,1])
+gender=pd.DataFrame()
 
 for year in years: 
     path='/Users/anasuyadas/nobackup/Dropbox/Dropbox/data pirates shared folder/NIH-projectFiles/dataFiles/RePORTER_PRJ_C_FY%d.csv' %year
