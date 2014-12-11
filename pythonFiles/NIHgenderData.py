@@ -7,13 +7,14 @@ import urllib2
 from zipfile import ZipFile
 import csv
 
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from pandas import DataFrame,Series
 import numpy as np
-import os
+import random
 # --------------------------------------------------------------------------------
-# This is the first file of 3-part series of script that slices the NIH data
+# This is the first file of 2-part series of script that slices the NIH data
 # This file can do the following: 
 #   -create a consolidated name file for a given number of years.
 #   - create a consolidated NIH or R01 data file for a given number of years
@@ -35,7 +36,6 @@ def extractNamesDict(numYears,saveFile):
         frame=pd.read_csv(path)
         frame['year']=year
         frame.columns=['name','gender','reps','year']
-
         names=names.append(frame)
 
     # group names and add counts of names across years
@@ -43,12 +43,13 @@ def extractNamesDict(numYears,saveFile):
     aggrNames=names.groupby(['name','gender'])
     groupedNames= aggrNames.aggregate(np.sum)
 
-    #  make grouped names into a dictionary
-    groupedNames=groupedNames.groupby(['name'][0])
+    #  
+    
+    #groupedNames=groupedNames.groupby(['name'][0])
 
 
     if saveFile:
-        groupedNames.to_csv('names%donwards.csv'%numYears)
+        groupedNames.to_csv('/datascience/nihProject/rawData/names%donwards.csv'%numYears)
 
     return names
 # --------------------------------------------------------------------------------
@@ -71,6 +72,8 @@ def getGenderIndex(PIfirstNames):
                 genderIndex=np.append(genderIndex,ind)
             
             elif repsByGender.shape[0] == 2 : # if match for both gender generate gender index
+                # this index estimates how much the gender of a particular name is contaminated by the other gender. 
+                # the sign of the gender index is also automatically determined by the more common gender
                 ind=(repsByGender.reps[0]-repsByGender.reps[1])/(repsByGender.reps[0]+repsByGender.reps[1])
                 genderIndex=np.append(genderIndex,ind)
 
@@ -134,43 +137,64 @@ def getPIfirstNames(data):
 
     return PIfirstNames
 #---------------------------------------------------------------------------------
-# read in data and create consolidated files and set some paths
+# test accuracy on yob2010 data
+path='/datascience/nihProject/genderPredictor/names/yob%d.txt' %2010
+names=pd.read_csv(path,header=None)
+names[0]=names[0].apply(lambda x: x.lower())
+names=names.drop_duplicates(cols=0,take_last=True)
+
+# generate a random index
+rows=len(names)
+allIDX=range(rows)
+random.shuffle(allIDX)
+
+#randomly select half the names. This is in order to not double the error rate of the index.
+randIdx=allIDX[0:rows/2]
+randNames=names.ix[randIdx]
+
+#replace the M, F strings with 1 or 2 so we can compare with the gender index
+mapping={'F':2,'M':1}
+randNames=randNames.replace({1:mapping}).dropna()
+randNames=randNames.drop_duplicates(cols=0,take_last=True)
+
+
+# get the gender index for all the names on the list
+gender2010=getGenderIndex(randNames[0])
+
+# use list comprehension to assign a gender  to each name if it is above or below a certain threshold
+femStr=[2 if x>=0.5 else 0 for x in gender2010['gender']]
+maleStr=[1 if x<=-0.5 else 0 for x in gender2010['gender']]
+genderStr=np.add(femStr,maleStr)
+numReturned=np.sum(genderStr!=0) # count the number of names for which a gender was assigned with high probability
+
+correct=np.sum(genderStr==randNames[1])
+propCorrect=np.true_divide(correct,numReturned)
+
+
+    
+# --------------------------------------------------------------------------------
+# read in data and set some paths
 workingPath=os.getcwd()
 
 dataPath='/datascience/nihProject/rawData'
-dataPath='/Users/anasuyadas/nobackup/Dropbox/Dropbox/data pirates shared folder/NIH-projectFiles/dataFiles'
+dataPath='/Users/anasuyadas/nobackup/Dropbox/Dropbox/data'
 
 figurePath='/datascience/nihProject/figures'
 
 os.chdir(dataPath)
 
-#data = pd.read_csv('/datascience/nihProject/rawData/NIHData.csv')
-
-
-#create consolidated file
-#data=loadNIHData(15,1)
-
-#create consolidated name lookup file
-#names= extractNamesDict(1980,1)
-
-#R01data = data.ix[data.ACTIVITY=='R01',:]
-
-#R01data.to_csv('datascience/nihProject/rawData/R01data.csv')
-
 #---------------------------------------------------------------------------------
-
-#R01data = pd.read_csv('/datascience/nihProject/rawData/R01data.csv')
-
-years=range(2000,2015)
+years=range(2007,2015)
+#K99's were introduced only in 2006
 numGrantsGender=np.zeros([1,4])
 costGrantsGender=np.zeros([4,1])
 gender=pd.DataFrame()
 
 for year in years: 
-    path='/Users/anasuyadas/nobackup/Dropbox/Dropbox/data pirates shared folder/NIH-projectFiles/dataFiles/RePORTER_PRJ_C_FY%d.csv' %year
-    data=pd.read_csv(path,low_memory=False )
-    R01data = data.ix[data.ACTIVITY=='R01',:]
-    PIfirstNames=getPIfirstNames(R01data)
+        path='/Users/anasuyadas/nobackup/Dropbox/Dropbox/data/RePORTER_PRJ_C_FY%d.csv' %year
+        data=pd.read_csv(path,low_memory=False )
+        R01data = data.ix[data.ACTIVITY=='K99',:]
+        PIfirstNames=getPIfirstNames(R01data)
 
     print 'getting gender data for year: %d' %year 
     PIgender=getGenderIndex(PIfirstNames['first'])
@@ -180,6 +204,6 @@ for year in years:
     R01datanew=pd.concat([R01datanew,   PIgender],axis=1)
 
     print 'writing gender data for year: %d'  %year 
-    R01datanew.to_csv('/datascience/nihProject/rawData/R01dataGender%d.csv'%year)
+    R01datanew.to_csv('/datascience/nihProject/rawData/K99dataGender%d.csv'%year)
 
 
