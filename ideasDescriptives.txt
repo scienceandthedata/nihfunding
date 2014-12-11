@@ -1,8 +1,8 @@
 Please add your ideas on how to describe, summarize, explore NIH data:
 
-- top 10 (number of grants, amount) over the years of PIs by subject area
-- top 10 by institute
-- funding over the years per NIH institute - which NIH institute gives out most money
+- top 10 (number of grants, amount) over the years of PIs by subject area - (Helena in progress)
+- top 10 by institute (done)
+- funding over the years per NIH institute - which NIH institute gives out most money (done)
 - proportion with amendments over the year 
 - amendments by institute - whether some institutes have fewer amendments 
 - word cloud - d3 and R
@@ -13,3 +13,4 @@ Please add your ideas on how to describe, summarize, explore NIH data:
 - trends on twitter/social media for science whether match grant funding trends  
 - correlation with congress and president political party over time (Shani)
 - blog posts about interview experiences (Friede and Shani)
+- funding success by gender, using classification (Anasuya and Bonnie)
